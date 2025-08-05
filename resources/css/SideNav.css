@@ -1,0 +1,221 @@
+/********** Admin Template CSS **********/
+
+:root {
+    --primary-admin: #009CFF;
+    --light-admin: #F3F6F9;
+    --dark-admin: #191C24;
+}
+
+.back-to-top-admin {
+    position: fixed;
+    display: none;
+    right: 45px;
+    bottom: 45px;
+    z-index: 99;
+}
+
+/*** Layout ***/
+.admin-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 250px;
+    height: 100vh;
+    overflow-y: auto;
+    background: var(--light-admin);
+    transition: 0.5s;
+    z-index: 999;
+}
+
+.admin-content {
+    margin-left: 250px;
+    min-height: 100vh;
+    background: #FFFFFF;
+    transition: 0.5s;
+}
+
+@media (min-width: 992px) {
+    .admin-sidebar {
+        margin-left: 0;
+    }
+
+    .admin-sidebar.open {
+        margin-left: -250px;
+    }
+
+    .admin-content {
+        width: calc(100% - 250px);
+    }
+
+    .admin-content.open {
+        width: 100%;
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .admin-sidebar {
+        margin-left: -250px;
+    }
+
+    .admin-sidebar.open {
+        margin-left: 0;
+    }
+
+    .admin-content {
+        width: 100%;
+        margin-left: 0;
+    }
+}
+
+/*** Navbar ***/
+.admin-sidebar .admin-navbar .admin-navbar-nav .admin-nav-link {
+    padding: 7px 20px;
+    color: var(--dark-admin);
+    font-weight: 500;
+    border-left: 3px solid var(--light-admin);
+    border-radius: 0 30px 30px 0;
+    outline: none;
+}
+
+.admin-sidebar .admin-navbar .admin-navbar-nav .admin-nav-link:hover,
+.admin-sidebar .admin-navbar .admin-navbar-nav .admin-nav-link.active {
+    color: var(--primary-admin);
+    background: #FFFFFF;
+    border-color: var(--primary-admin);
+}
+
+.admin-sidebar .admin-navbar .admin-navbar-nav .admin-nav-link i {
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #FFFFFF;
+    border-radius: 40px;
+}
+
+.admin-sidebar .admin-navbar .admin-navbar-nav .admin-nav-link:hover i,
+.admin-sidebar .admin-navbar .admin-navbar-nav .admin-nav-link.active i {
+    background: var(--light-admin);
+}
+
+.admin-sidebar .admin-navbar .dropdown-toggle::after {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    border: none;
+    content: "\f107";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    transition: .5s;
+}
+
+.admin-sidebar .admin-navbar .dropdown-toggle[aria-expanded=true]::after {
+    transform: rotate(-180deg);
+}
+
+.admin-sidebar .admin-navbar .dropdown-item {
+    padding-left: 25px;
+    border-radius: 0 30px 30px 0;
+}
+
+.admin-content .admin-navbar .admin-navbar-nav .admin-nav-link {
+    margin-left: 25px;
+    padding: 12px 0;
+    color: var(--dark-admin);
+    outline: none;
+}
+
+.admin-content .admin-navbar .admin-navbar-nav .admin-nav-link:hover,
+.admin-content .admin-navbar .admin-navbar-nav .admin-nav-link.active {
+    color: var(--primary-admin);
+}
+
+.admin-content .admin-navbar .admin-sidebar-toggler,
+.admin-content .admin-navbar .admin-navbar-nav .admin-nav-link i {
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #FFFFFF;
+    border-radius: 40px;
+}
+
+.admin-content .admin-navbar .dropdown-toggle::after {
+    margin-left: 6px;
+    vertical-align: middle;
+    border: none;
+    content: "\f107";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    transition: .5s;
+}
+
+.admin-content .admin-navbar .dropdown-toggle[aria-expanded=true]::after {
+    transform: rotate(-180deg);
+}
+
+@media (max-width: 575.98px) {
+    .admin-content .admin-navbar .admin-navbar-nav .admin-nav-link {
+        margin-left: 15px;
+    }
+}
+
+/*** Date Picker ***/
+.admin-bootstrap-datetimepicker-widget.bottom {
+    top: auto !important;
+}
+
+.admin-bootstrap-datetimepicker-widget .table * {
+    border-bottom-width: 0px;
+}
+
+.admin-bootstrap-datetimepicker-widget .table th {
+    font-weight: 500;
+}
+
+.admin-bootstrap-datetimepicker-widget.dropdown-menu {
+    padding: 10px;
+    border-radius: 2px;
+}
+
+.admin-bootstrap-datetimepicker-widget table td.active,
+.admin-bootstrap-datetimepicker-widget table td.active:hover {
+    background: var(--primary-admin);
+}
+
+.admin-bootstrap-datetimepicker-widget table td.today::before {
+    border-bottom-color: var(--primary-admin);
+}
+
+/*** Testimonial ***/
+.admin-progress .admin-progress-bar {
+    width: 0px;
+    transition: 2s;
+}
+
+.admin-testimonial-carousel .owl-dots {
+    margin-top: 24px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.admin-testimonial-carousel .owl-dot {
+    position: relative;
+    display: inline-block;
+    margin: 0 5px;
+    width: 15px;
+    height: 15px;
+    border: 5px solid var(--primary-admin);
+    border-radius: 15px;
+    transition: .5s;
+}
+
+.admin-testimonial-carousel .owl-dot.active {
+    background: var(--dark-admin);
+    border-color: var(--primary-admin);
+}
