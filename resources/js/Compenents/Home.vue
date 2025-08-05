@@ -115,7 +115,8 @@ onMounted(() => {
         <div class="container py-5">
             <div class="mx-auto text-center mb-5" style="max-width: 900px">
                 <!-- <div v-html="page.props.packages.description"></div> -->
-                 Packages
+                <h5 class="section-title px-3">Affiliated Universities</h5>
+                <h1 class="mb-0">Affiliated Universities</h1>
             </div>
             <div class="packages-carousel owl-carousel">
                 <div v-for="university in page.props.universities" :key="university.id" class="packages-item">
