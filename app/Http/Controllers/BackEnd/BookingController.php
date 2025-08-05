@@ -14,32 +14,40 @@ class BookingController extends Controller
     //bookig list
     public function bookingList(Request $request)
     {
-        $bookings=Booking::all();
-        return Inertia::render('BackEnd/Booking/BookingListPage',['bookings'=>$bookings]);
+        $fd = $request->fromDate ? date('Y-m-d', strtotime($request->fromDate)) : null;
+        $td = $request->toDate ? date('Y-m-d', strtotime($request->toDate)) : null;
+        $bookings = Booking::when($fd && $td, function ($q) use ($fd, $td) {
+            $q->whereDate('created_at', '>=', $fd)
+                ->whereDate('created_at', '<=', $td);
+        })->when($request->status, function ($q) use ($request) {
+            $q->where('status', $request->status);
+        })->get();
+        return Inertia::render('BackEnd/Booking/BookingListPage', ['bookings' => $bookings]);
     }
 
     //booking save page
     public function bookingSavePage(Request $request)
     {
-        $booking=Booking::find($request->booking_id);
-        $users=User::all();
-        return Inertia::render('BackEnd/Booking/BookingSavePage',['booking'=>$booking,'users'=>$users]);
+        $booking = Booking::find($request->booking_id);
+        $users = User::all();
+        return Inertia::render('BackEnd/Booking/BookingSavePage', ['booking' => $booking, 'users' => $users]);
     }
 
     //create booking
-    public function bookingSave(BookingSaveRequest $request){
+    public function bookingSave(BookingSaveRequest $request)
+    {
 
         // return $request->all();
-        $data=[
-            'user_id'=>$request->user_id,
-            'name'=>$request->name,
-            'email'=>$request->email,
-            'bd_mobile'=>$request->bd_phone,
-            'last_education'=>$request->last_education,
-            'prefferred_country'=>$request->prefferred_country,
+        $data = [
+            'user_id' => $request->user_id,
+            'name' => $request->name,
+            'email' => $request->email,
+            'bd_mobile' => $request->bd_phone,
+            'last_education' => $request->last_education,
+            'prefferred_country' => $request->prefferred_country,
         ];
 
-        if($request->hasFile('pdf')) {
+        if ($request->hasFile('pdf')) {
             $file = $request->file('pdf');
             $fileName = time() . '_' . $file->getClientOriginalName();
             $file->storeAs('booking', $fileName);
@@ -47,27 +55,29 @@ class BookingController extends Controller
         }
 
         Booking::create($data);
-        return redirect()->back()->with(['status'=>true,'message'=>'Booking Saved Successfully']);
+        return redirect()->back()->with(['status' => true, 'message' => 'Booking Saved Successfully']);
     }
 
     //update booking
-    public function bookingUpdate(BookingSaveRequest $request){
-        Booking::where('id',$request->booking_id)->update([
-            'user_id'=>$request->user_id,
-            'name'=>$request->name,
-            'email'=>$request->email,
-            'bd_mobile'=>$request->bd_phone,
-            'last_education'=>$request->last_education,
-            'prefferred_country'=>$request->prefferred_country,
-            'status'=>$request->status
+    public function bookingUpdate(BookingSaveRequest $request)
+    {
+        Booking::where('id', $request->booking_id)->update([
+            'user_id' => $request->user_id,
+            'name' => $request->name,
+            'email' => $request->email,
+            'bd_mobile' => $request->bd_phone,
+            'last_education' => $request->last_education,
+            'prefferred_country' => $request->prefferred_country,
+            'status' => $request->status
         ]);
 
-        return redirect()->back()->with(['status'=>true,'message'=>'Booking Updated Successfully']);
+        return redirect()->back()->with(['status' => true, 'message' => 'Booking Updated Successfully']);
     }
 
     //delete booking
-    public function bookingDelete(Request $request){
-        Booking::where('id',$request->id)->delete();
-        return redirect()->back()->with(['status'=>true,'message'=>'Booking Deleted Successfully']);
+    public function bookingDelete(Request $request)
+    {
+        Booking::where('id', $request->id)->delete();
+        return redirect()->back()->with(['status' => true, 'message' => 'Booking Deleted Successfully']);
     }
 }

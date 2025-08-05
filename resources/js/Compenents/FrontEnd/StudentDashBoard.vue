@@ -15,6 +15,7 @@ const headers = [
     { text: "Abroad Phone", value: "abroad_mobile" },
     { text: "Preffered Country", value: "prefferred_country" },
     { text: "Last Education", value: "last_education" },
+    { text: "Status", value: "status" },
 ];
 
 // Users and search fields

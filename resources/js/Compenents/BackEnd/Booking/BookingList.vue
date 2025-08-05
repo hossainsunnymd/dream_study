@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from "vue";
-import { Link, router, usePage } from "@inertiajs/vue3";
+import { Link, router, usePage,useForm} from "@inertiajs/vue3";
 import { createToaster } from "@meforma/vue-toaster";
 
 const toaster = createToaster({});
@@ -32,6 +32,23 @@ function deleteBooking(id) {
     }
 }
 
+const form = useForm({
+    status: "",
+    fromDate: "",
+    toDate: "",
+});
+
+function search() {
+   form.get('/admin/bookings', {
+       preserveScroll: true,
+       preserveState: true,
+       onSuccess: () => {
+           items.value = page.props.bookings
+       }
+
+   });
+}
+
 // Flash message toast
 if (page.props.flash.status === false) {
     toaster.error(page.props.flash.message);
@@ -43,19 +60,55 @@ if (page.props.flash.status === false) {
 <template>
     <h3 class="fw-bold mb-4">Booking List</h3>
 
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <!-- Search Input -->
-        <input
-            type="text"
-            class="form-control w-25"
-            v-model="searchItem"
-            placeholder="Search here"
-        />
+        <div class="row mb-3 g-2 align-items-center">
+        <!-- Search Section -->
+        <div class="col-12 col-md-9">
+            <div class="d-flex flex-wrap gap-2">
+                <input
+                    type="text"
+                    class="form-control flex-grow-1"
+                    v-model="searchItem"
+                    placeholder="Search by here"
+                    style="max-width: 200px"
+                />
+                <select
+                    v-model="form.status"
+                    class="form-select"
+                    style="max-width: 200px"
+                >
+                    <option value="" selected>Select Status</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Cancel">Cancel</option>
+                    <option value="Approve">Approve</option>
 
-        <!-- Add Button -->
-        <Link v-if="page.props.user.can['booking-save']" :href="`/admin/booking-save-page?booking_id=${0}`" class="btn btn-success">
+                </select>
+                <input
+                    v-model="form.fromDate"
+                    type="date"
+                    class="form-control"
+                    style="max-width: 200px"
+                />
+                <input
+                    v-model="form.toDate"
+                    type="date"
+                    class="form-control"
+                    style="max-width: 200px"
+                />
+                <button @click="search" class="btn btn-primary">Search</button>
+                <Link href="/admin/bookings" class="btn btn-dark">Clear</Link>
+            </div>
+        </div>
+
+        <!-- Create Sale Button -->
+        <div class="col-12 col-md-3 text-md-end mt-2 mt-md-0">
+           <Link
+            v-if="page.props.user.can['booking-save']"
+            :href="`/admin/booking-save-page?booking_id=${0}`"
+            class="btn btn-success"
+        >
             Add Booking
         </Link>
+        </div>
     </div>
 
     <!-- Data Table -->
@@ -74,13 +127,18 @@ if (page.props.flash.status === false) {
         <!-- Action Column -->
         <template #item-action="{ id }">
             <div class="d-flex gap-2">
-                <Link v-if="page.props.user.can['booking-update']"
+                <Link
+                    v-if="page.props.user.can['booking-update']"
                     :href="`/admin/booking-save-page?booking_id=${id}`"
                     class="btn btn-sm btn-primary"
                 >
                     Edit
                 </Link>
-                <button v-if="page.props.user.can['booking-delete']" @click="deleteBooking(id)" class="btn btn-sm btn-danger">
+                <button
+                    v-if="page.props.user.can['booking-delete']"
+                    @click="deleteBooking(id)"
+                    class="btn btn-sm btn-danger"
+                >
                     Delete
                 </button>
             </div>
