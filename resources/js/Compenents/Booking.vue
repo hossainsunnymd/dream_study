@@ -17,7 +17,7 @@ const form = useForm({
     prefferred_country: "",
     pdf: "",
 });
-console.log(page.props.university);
+
 
 // Custom dropdown logic
 const isOpen = ref(false);

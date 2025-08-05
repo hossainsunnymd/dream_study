@@ -33,7 +33,6 @@ class BookingSaveRequest extends FormRequest
             'last_education' => 'required|string',
             'prefferred_country' => 'required|string',
             'pdf' => $this->hasFile('pdf') ?'file|max:2048' : '',
-            'status' => 'required|string',
 
         ];
     }

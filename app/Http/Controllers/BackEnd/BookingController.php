@@ -29,6 +29,7 @@ class BookingController extends Controller
     //create booking
     public function bookingSave(BookingSaveRequest $request){
 
+        // return $request->all();
         $data=[
             'user_id'=>$request->user_id,
             'name'=>$request->name,
@@ -36,7 +37,6 @@ class BookingController extends Controller
             'bd_mobile'=>$request->bd_phone,
             'last_education'=>$request->last_education,
             'prefferred_country'=>$request->prefferred_country,
-            'status'=>$request->status
         ];
 
         if($request->hasFile('pdf')) {
