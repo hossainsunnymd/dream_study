@@ -22,7 +22,7 @@ class PageContentSaveRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'page_name_id' => 'required|string|max:255',
+            'page_name_id' => 'required|exists:page_names,id',
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'meta_title' => 'required|string|max:255',

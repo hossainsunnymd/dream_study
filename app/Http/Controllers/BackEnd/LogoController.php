@@ -28,6 +28,7 @@ class LogoController extends Controller
     //logo save
     public function logoSave(Request $request)
     {
+
         $data = $request->only([
             'site_name',
             'fb_link',
@@ -83,6 +84,7 @@ class LogoController extends Controller
     //update logo
     public function logoUpdate( Request $request, $logo_id)
     {
+   
         $siteSetting = Logo::findOrFail($logo_id);
 
         $data = $request->only([

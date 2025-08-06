@@ -116,8 +116,8 @@ function submitForm() {
                         <option value="Enable">Enable</option>
                         <option value="Disable">Disable</option>
                     </select>
-                     <div v-if="errors.phone" class="text-danger mt-1">
-                        {{ errors.phone[0] }}
+                     <div v-if="errors.activity" class="text-danger mt-1">
+                        {{ errors.activity[0] }}
                     </div>
                 </div>
 

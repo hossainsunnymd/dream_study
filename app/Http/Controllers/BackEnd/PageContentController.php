@@ -39,7 +39,7 @@ class PageContentController extends Controller
             'meta_title' => $request->meta_title,
             'meta_description' => $request->meta_description,
         ];
-
+      
         // Image handle
         if ($request->hasFile('image')) {
             $image = $request->file('image');

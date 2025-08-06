@@ -10,6 +10,7 @@ use App\Models\Country;
 use App\Models\PageName;
 use App\Models\University;
 use Illuminate\Http\Request;
+use App\Models\SuccessStories;
 use App\Models\ServiceCategory;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -57,7 +58,8 @@ class PageController extends Controller
         $countries=Country::all();
         $serviceCategories=ServiceCategory::all();
         $universities=University::with('country')->get();
-        return Inertia::render('FrontEnd/HomePage',['countries'=>$countries,'serviceCategories'=>$serviceCategories,'universities'=>$universities]);
+        $successStories=SuccessStories::all();
+        return Inertia::render('FrontEnd/HomePage',['countries'=>$countries,'serviceCategories'=>$serviceCategories,'universities'=>$universities,'successStories'=>$successStories]);
     }
 
     //about
