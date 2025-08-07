@@ -43,13 +43,13 @@ const page = usePage();
             <div class="text-center mb-4">
               <i class="fa fa-phone-alt fa-3x text-primary mb-3"></i>
               <h4 class="text-primary">Mobile</h4>
-              <p class="mb-0 text-white">{{ page.props.setting.site_phone }}</p>
-              <p class="mb-0 text-white">{{ page.props.setting.site_fax }}</p>
+              <p class="mb-0 text-white typing-text">{{ page.props.setting.site_phone }}</p><br />
+              <p class="mb-0 text-white typing-text">{{ page.props.setting.site_fax }}</p>
             </div>
             <div class="text-center">
               <i class="fa fa-envelope-open fa-3x text-primary mb-3"></i>
               <h4 class="text-primary">Email</h4>
-              <p class="mb-0 text-white">{{ page.props.setting.site_email }}</p>
+              <p class="mb-0 text-white typing-text">{{ page.props.setting.site_email }}</p>
             </div>
           </div>
         </div>
@@ -187,4 +187,59 @@ label { color: #000 !important; }
 .animate-slide-up { animation: slideUp 1s ease forwards; }
 .animate-slide-down { animation: slideDown 1s ease forwards; }
 .animate-fade-in { animation: fadeIn 1.2s ease forwards; }
+
+
+.typing-text {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    position: relative;
+    width: 15ch;
+}
+
+.typing-text  {
+    display: inline-block;
+    animation: typingLoop 4s steps(9) infinite;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+/* Fixed blinking cursor */
+.typing-text::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 2px;
+    background-color: #fff;
+    animation: blink 1.5s steps(1) infinite;
+}
+
+@keyframes typingLoop {
+    0% {
+        width: 0ch;
+    }
+    40% {
+        width: 15ch;
+    }
+    60% {
+        width: 15ch;
+    }
+    100% {
+        width: 0ch;
+    }
+}
+
+@keyframes blink {
+    0%,
+    50%,
+    100% {
+        opacity: 1;
+    }
+    25%,
+    75% {
+        opacity: 0;
+    }
+}
 </style>

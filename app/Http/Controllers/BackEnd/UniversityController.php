@@ -52,9 +52,10 @@ class UniversityController extends Controller
     }
 
     //university update
-    public function universityUpdate(UniversitySaveRequest $request)
+    public function universityUpdate(UniversitySaveRequest $request,$id)
     {
-        $university = University::findOrFail($request->university_id);
+
+        $university = University::findOrFail($id);
 
         $data = [
             'country_id' => $request->country_id,

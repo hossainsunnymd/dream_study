@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ReviewSaveRequest extends FormRequest
+class CarouselSaveRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,11 +22,8 @@ class ReviewSaveRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
-            'title' => 'nullable|string|max:255',
-            'rating' => 'required|numeric|min:1|max:5',
             // 'image' => $this->hasFile('image') ? 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:100' : 'required|string',
-            'description' => 'required|string',
+            'rank' => 'required|integer|min:1|unique:carousels,rank,' . $this->route('id'),
         ];
     }
 }

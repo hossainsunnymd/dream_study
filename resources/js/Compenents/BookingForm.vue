@@ -59,7 +59,7 @@ function submitForm() {
         <!-- Booking Form -->
         <div class="col-lg-6">
           <div class="form-card glass p-5 rounded-4 animate-card">
-            <h2 class="form-title mb-4">Book A Tour Deal</h2>
+            <h2 class="form-title mb-4">Book Your Seat</h2>
             <form @submit.prevent="submitForm">
               <div class="row g-3">
                 <!-- Name -->

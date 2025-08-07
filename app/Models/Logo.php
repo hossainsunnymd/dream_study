@@ -36,6 +36,8 @@ class Logo extends Model
     'verify_email_banner_image',
     'verify_otp_banner_image',
     'reset_password_banner_image',
+    'payment_image',
+    'google_map_link',
 ];
 
 }

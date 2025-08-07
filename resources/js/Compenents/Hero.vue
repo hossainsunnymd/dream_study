@@ -1,4 +1,5 @@
-<script setup></script>
+<script setup>
+</script>
 
 <template>
     <!-- Carousel Start -->
@@ -179,4 +180,5 @@
     </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+</style>

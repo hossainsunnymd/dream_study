@@ -240,6 +240,19 @@ function toggleSidebar() {
                     >
                         <i class="fa fa-file-alt me-2"></i> Logo/Banner
                     </Link>
+
+                      <!-- Carousels -->
+                    <Link
+                        v-if="page.props.user.can['carousel-list']"
+                        href="/admin/carousels"
+                        :class="[
+                            'admin-nav-item admin-nav-link',
+                            isActiveRoute('/carousels') ? 'active' : '',
+                        ]"
+                        style="text-decoration: none"
+                    >
+                        <i class="fa fa-file-alt me-2"></i> Carousels
+                    </Link>
                 </div>
             </nav>
         </div>

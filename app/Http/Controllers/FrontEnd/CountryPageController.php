@@ -4,6 +4,7 @@ namespace App\Http\Controllers\FrontEnd;
 
 use Inertia\Inertia;
 use App\Models\Country;
+use App\Models\University;
 use Illuminate\Http\Request;
 use App\Models\CountryDetail;
 use App\Models\SuccessStories;
@@ -17,10 +18,12 @@ class CountryPageController extends Controller
         $country = CountryDetail::find($id);
         $countries = Country::all();
         $successStories = SuccessStories::all();
+        $universities=University::where('country_id','=',$id)->with('country')->get();
         return Inertia::render('FrontEnd/CountrySelectByIDPage', [
             'country' => $country,
             'countries' => $countries,
-            'successStories' => $successStories
+            'successStories' => $successStories,
+            'universities' => $universities
         ]);
     }
 }

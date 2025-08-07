@@ -111,6 +111,13 @@ class PermissionSeeder extends Seeder
             'page-save',
             'page-update',
             'page-delete',
+
+              // carousels
+            'carousel-list',
+            'carousel-save-page',
+            'carousel-save',
+            'carousel-update',
+            'carousel-delete',
         ];
 
         foreach ($permissions as $permission) {

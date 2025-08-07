@@ -1,73 +1,92 @@
 <script setup>
-import { onMounted } from "vue";
-import { usePage } from "@inertiajs/vue3";
+import { Swiper, SwiperSlide } from "swiper/vue";
+import { Pagination, Navigation, Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import { computed } from "vue";
+import { usePage, Link } from "@inertiajs/vue3";
+import StudentReviews from "./StudentReviews.vue";
 import SuccessStoriesCarousel from "./SuccessStoriesCarousel.vue";
 import BookingForm from "./BookingForm.vue";
+const universities = computed(() => page.props.universities ?? []);
 
 const page = usePage();
 
-onMounted(() => {
-    setTimeout(() => {
-        $(".packages-carousel").owlCarousel({
-            items: 3,
-            margin: 15,
-            loop: true,
-            autoplay: true,
-            autoplayTimeout: 2000,
-            smartSpeed: 800,
-            nav: true,
-            dots: true,
-            responsive: {
-                0: { items: 1 },
-                576: { items: 2 },
-                768: { items: 3 },
-                992: { items: 4 },
-            },
-        });
-    }, 100);
-});
 </script>
 
 <template>
-<div class="container-fluid packages py-5">
-    <div class="container py-5">
-        <div class="mx-auto text-center mb-5" style="max-width: 900px">
-            <h5 class="section-title px-3">Affiliated Universities</h5>
-            <h1 class="mb-0">Affiliated Universities</h1>
-        </div>
-
-        <div class="packages-carousel owl-carousel owl-theme">
-            <div
-                v-for="university in page.props.universities"
-                :key="university.id"
-                class="card university-card shadow-sm rounded overflow-hidden position-relative p-0 animate-card"
-            >
-                <img
-                    :src="`/storage/university/${university.image}`"
-                    class="img-fluid w-100"
-                    alt="University Image"
-                />
-                <div class="university-name-overlay">{{ university.name }}</div>
+    <!-- Universities start -->
+    <div class="container-fluid packages py-5">
+        <div class="container py-5">
+            <div class="mx-auto text-center mb-5" style="max-width: 900px">
+                <h5 class="section-title px-3">Affiliated Universities</h5>
+                <h1 class="mb-0">Affiliated Universities</h1>
             </div>
+
+            <template v-if="universities.length > 0">
+                <Swiper
+                    :modules="[Pagination, Navigation, Autoplay]"
+                    :slides-per-view="4"
+                    :space-between="15"
+                    :loop="universities.length >= 1"
+                    :autoplay="{ delay: 1000, disableOnInteraction: false }"
+                    :pagination="{ clickable: true }"
+                    navigation
+                    :breakpoints="{
+                        0: { slidesPerView: 1 },
+                        576: { slidesPerView: 2 },
+                        768: { slidesPerView: 3 },
+                        992: { slidesPerView: 4 },
+                    }"
+                    class="mySwiper"
+                >
+                    <SwiperSlide
+                        v-for="university in universities"
+                        :key="university.id"
+                    >
+                        <div
+                            class="card university-card shadow-sm rounded overflow-hidden position-relative p-0 animate-card"
+                        >
+                            <img
+                                :src="`/storage/university/${university.image}`"
+                                class="img-fluid w-100"
+                                alt="University Image"
+                            />
+                            <div class="university-name-overlay">
+                                {{ university.name }}
+                            </div>
+                        </div>
+                    </SwiperSlide>
+                </Swiper>
+            </template>
+
+            <template v-else>
+                <h2 class="text-center">No Universities Found</h2>
+            </template>
         </div>
     </div>
-</div>
+    <!-- Universities end -->
 
- <!-- success stories start -->
     <SuccessStoriesCarousel />
-    <!-- success stories end -->
-
-    <!-- Booking form start -->
     <BookingForm />
-    <!-- Booking form end -->
+    <StudentReviews />
+
+
 </template>
 
 <style scoped>
 /* Background gradient animation */
 @keyframes animatedBg {
-    0% { background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); }
-    50% { background: linear-gradient(135deg, #203a43, #2c5364, #0f2027); }
-    100% { background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); }
+    0% {
+        background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    }
+    50% {
+        background: linear-gradient(135deg, #203a43, #2c5364, #0f2027);
+    }
+    100% {
+        background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    }
 }
 
 .container-fluid.packages {
@@ -93,11 +112,21 @@ onMounted(() => {
 
 /* Floating animation for cards */
 @keyframes floatCard {
-    0% { transform: translateY(0px) rotate(0deg); }
-    25% { transform: translateY(-6px) rotate(-1deg); }
-    50% { transform: translateY(-12px) rotate(1deg); }
-    75% { transform: translateY(-6px) rotate(-1deg); }
-    100% { transform: translateY(0px) rotate(0deg); }
+    0% {
+        transform: translateY(0px) rotate(0deg);
+    }
+    25% {
+        transform: translateY(-6px) rotate(-1deg);
+    }
+    50% {
+        transform: translateY(-12px) rotate(1deg);
+    }
+    75% {
+        transform: translateY(-6px) rotate(-1deg);
+    }
+    100% {
+        transform: translateY(0px) rotate(0deg);
+    }
 }
 
 .university-card.animate-card {
@@ -165,6 +194,10 @@ onMounted(() => {
     transform: scale(1.1);
 }
 
-.owl-carousel .owl-nav button.owl-next { right: -10px; }
-.owl-carousel .owl-nav button.owl-prev { left: -10px; }
+.owl-carousel .owl-nav button.owl-next {
+    right: -10px;
+}
+.owl-carousel .owl-nav button.owl-prev {
+    left: -10px;
+}
 </style>

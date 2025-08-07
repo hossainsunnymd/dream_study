@@ -7,7 +7,7 @@ import UniversityImage from "./UniversityImage.vue";
 const toaster = createToaster();
 const page = usePage();
 const university_id =
-    new URLSearchParams(window.location.search).get("university_id") ?? 0;
+    new URLSearchParams(window.location.search).get("university_id");
 const university = page.props.university;
 const errors = computed(() => page.props.errors || {});
 

@@ -8,15 +8,7 @@ import { computed } from "vue";
 import { usePage } from "@inertiajs/vue3";
 
 const page = usePage();
-const stories = computed(() => page.props.successStories ?? []);
-
-function extractVideoID(url) {
-  const regExp = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
-  const match = url.match(regExp);
-  return match ? match[1] : "";
-}
-
-
+const reviews = computed(() => page.props.reviews ?? []);
 </script>
 
 <template>
@@ -26,8 +18,8 @@ function extractVideoID(url) {
 
     <div class="container py-5 position-relative">
       <div class="mx-auto text-center mb-4" style="max-width: 900px">
-        <h5 class="section-title px-3">Success Stories</h5>
-        <h1 class="mb-0">Success Stories</h1>
+        <h5 class="section-title px-3">Reviews</h5>
+        <h1 class="mb-0">Our Students Say!!</h1>
       </div>
 
       <!-- Swiper Carousel -->
@@ -36,7 +28,7 @@ function extractVideoID(url) {
           :modules="[Pagination, Navigation, Autoplay]"
           :slides-per-view="4"
           :space-between="20"
-          :loop="stories.length >= 1"
+          :loop="reviews.length >= 1"
           :autoplay="{ delay: 3000, disableOnInteraction: false }"
           :pagination="{ clickable: true }"
           navigation
@@ -48,35 +40,32 @@ function extractVideoID(url) {
           }"
           class="mySwiper"
         >
-          <SwiperSlide v-for="story in stories" :key="story.id">
-           <div class="ratio ratio-16x9">
-              <iframe loading="lazy" :src="`//www.youtube.com/embed/${extractVideoID(story.video)}`" title="YouTube video player" allowfullscreen></iframe>
-            </div>
-          </SwiperSlide>
-        </Swiper>
-      </div>
-
-       <!-- Swiper Carousel -->
-      <div class="carousel-container mt-4">
-        <Swiper
-          :modules="[Pagination, Navigation, Autoplay]"
-          :slides-per-view="4"
-          :space-between="20"
-          :loop="stories.length >= 1"
-          :autoplay="{ delay: 3000, disableOnInteraction: false }"
-          :pagination="{ clickable: true }"
-          navigation
-          :breakpoints="{
-            0: { slidesPerView: 1, spaceBetween: 10 },
-            576: { slidesPerView: 2, spaceBetween: 15 },
-            768: { slidesPerView: 3, spaceBetween: 15 },
-            992: { slidesPerView: 4, spaceBetween: 15 }
-          }"
-          class="rtl-mySwiper "
-        >
-          <SwiperSlide v-for="story in stories" :key="story.id">
-           <div class="ratio ratio-16x9">
-             <img :src="`/storage/success/${story.image}`" alt="">
+          <SwiperSlide v-for="review in reviews" :key="review.id">
+            <div
+              class="card story-card shadow-sm rounded overflow-hidden animate-card"
+              style="margin: 0 auto; border: none"
+            >
+              <div class="ratio ratio-16x9">
+                <img
+                  :src="`/storage/review/${review.image}`"
+                  :alt="review.name"
+                />
+              </div>
+              <div class="p-3 text-white">
+                <h5 class="mb-1">{{ review.name }}</h5>
+                <div class="rating mb-2">
+                  <span
+                    v-for="n in 5"
+                    :key="n"
+                    class="star"
+                    :class="{ filled: n <= review.rating }"
+                    >★</span
+                  >
+                </div>
+                <p class="mb-0" style="font-size: 14px">
+                  {{ review.description }}
+                </p>
+              </div>
             </div>
           </SwiperSlide>
         </Swiper>
@@ -202,12 +191,6 @@ function extractVideoID(url) {
   overflow: hidden;
 }
 
-.rtl-mySwiper {
-  width: 100%;
-  position: relative;
-  overflow: hidden;
-  direction: rtl;
-}
 /* Navigation button styling */
 .swiper-button-next {
   right: -40px;
@@ -221,4 +204,3 @@ function extractVideoID(url) {
   z-index: 10;
 }
 </style>
-

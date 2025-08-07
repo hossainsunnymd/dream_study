@@ -41,6 +41,8 @@ return new class extends Migration {
             $table->string('verify_otp_banner_image')->nullable();
             $table->string('verify_email_banner_image')->nullable();
             $table->string('reset_password_banner_image')->nullable();
+            $table->string('google_map_link')->nullable();
+            $table->string('payment_image')->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });

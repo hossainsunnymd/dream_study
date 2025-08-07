@@ -1,77 +1,91 @@
 <script setup>
-import { Link , usePage} from '@inertiajs/vue3';
+import { Link, usePage } from '@inertiajs/vue3';
 const page = usePage();
 </script>
 
 <template>
-    <div class="container-fluid bg-primary px-5 d-none d-lg-block">
-        <div class="row gx-0">
-            <div class="col-lg-8 text-center text-lg-start mb-2 mb-lg-0">
-                <div
-                    class="d-inline-flex align-items-center"
-                    style="height: 45px"
+    <div class="container-fluid bg-dark text-white py-2 px-5 d-none d-lg-block animate__animated animate__fadeInDown">
+        <div class="row align-items-center">
+            <!-- Left Social Icons -->
+            <div class="col-lg-8 d-flex align-items-center gap-2">
+                <a
+                    v-for="(icon, index) in ['twitter', 'facebook-f', 'linkedin-in', 'instagram', 'youtube']"
+                    :key="index"
+                    :href="'#'"
+                    class="btn btn-sm btn-outline-light btn-sm-square rounded-circle hover-float"
                 >
-                    <a
-                        class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2"
-                        href=""
-                        ><i class="fab fa-twitter fw-normal"></i
-                    ></a>
-                    <a
-                        class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2"
-                        href=""
-                        ><i class="fab fa-facebook-f fw-normal"></i
-                    ></a>
-                    <a
-                        class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2"
-                        href=""
-                        ><i class="fab fa-linkedin-in fw-normal"></i
-                    ></a>
-                    <a
-                        class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2"
-                        href=""
-                        ><i class="fab fa-instagram fw-normal"></i
-                    ></a>
-                    <a
-                        class="btn btn-sm btn-outline-light btn-sm-square rounded-circle"
-                        href=""
-                        ><i class="fab fa-youtube fw-normal"></i
-                    ></a>
-                </div>
+                    <i :class="`fab fa-${icon}`"></i>
+                </a>
             </div>
-            <div class="col-lg-4 text-center text-lg-end">
-                <div
-                    class="d-inline-flex align-items-center"
-                    style="height: 45px"
-                >
-                    <Link v-if="page.props.user.login==false" href="/register"
-                        ><small class="me-3 text-light"
-                            ><i class="fa fa-user me-2"></i>Register</small
-                        ></Link
+
+            <!-- Right Auth Links -->
+            <div class="col-lg-4 text-end">
+                <div class="d-inline-flex align-items-center gap-3">
+                    <Link
+                        v-if="!page.props.user.login"
+                        href="/register"
+                        class="text-white text-decoration-none hover-underline"
                     >
-                    <Link v-if="page.props.user.login==false" href="/login"
-                        ><small class="me-3 text-light"
-                            ><i class="fa fa-sign-in-alt me-2"></i>Login</small
-                        ></Link
+                        <small><i class="fa fa-user me-1"></i>Register</small>
+                    </Link>
+                    <Link
+                        v-if="!page.props.user.login"
+                        href="/login"
+                        class="text-white text-decoration-none hover-underline"
                     >
-                    <Link v-if="page.props.user.login==true" href="/logout"
-                        ><small class="me-3 text-light"
-                            ><i class="fa fa-sign-in-alt me-2"></i>Logout</small
-                    ></Link
+                        <small><i class="fa fa-sign-in-alt me-1"></i>Login</small>
+                    </Link>
+                    <Link
+                        v-if="page.props.user.login"
+                        href="/logout"
+                        class="text-white text-decoration-none hover-underline"
                     >
-                    <div class="dropdown">
-                        <Link v-if="page.props.user.login==true"
-                            :href="page.props.user.authUser.user_type == 'admin' ? '/admin/dashboard' : '/student/dashboard'"
-                            class="dropdown-toggle text-light"
-                            ><small
-                                ><i class="fa fa-home me-2"></i> My
-                                Dashboard</small
-                            ></Link
-                        >
-                    </div>
+                        <small><i class="fa fa-sign-out-alt me-1"></i>Logout</small>
+                    </Link>
+                    <Link
+                        v-if="page.props.user.login"
+                        :href="page.props.user.authUser.user_type === 'admin' ? '/admin/dashboard' : '/student/dashboard'"
+                        class="text-white text-decoration-none hover-underline"
+                    >
+                        <small><i class="fa fa-home me-1"></i>Dashboard</small>
+                    </Link>
                 </div>
             </div>
         </div>
     </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+/* Social Button Hover Animation */
+.btn-sm-square {
+    width: 35px;
+    height: 35px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+.hover-float:hover {
+    transform: translateY(-3px) scale(1.05);
+    background-color: #ffffff22;
+}
+
+/* Text Link Hover Animation */
+.hover-underline {
+    position: relative;
+    transition: color 0.3s ease;
+}
+.hover-underline::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 0%;
+    height: 1px;
+    background-color: #fff;
+    transition: width 0.3s ease;
+}
+.hover-underline:hover::after {
+    width: 100%;
+}
+</style>
