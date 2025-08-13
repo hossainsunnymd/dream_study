@@ -4,12 +4,13 @@ import { Pagination, Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { usePage } from "@inertiajs/vue3";
 
 const page = usePage();
 const stories = computed(() => page.props.successStories ?? []);
 
+// Video ID extractor (YouTube URL থেকে)
 function extractVideoID(url) {
   const regExp = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
   const match = url.match(regExp);
@@ -17,11 +18,22 @@ function extractVideoID(url) {
 }
 
 
+const showModal = ref(false);
+const currentVideoId = ref(null);
+
+function openModal(videoUrl) {
+  currentVideoId.value = extractVideoID(videoUrl);
+  showModal.value = true;
+}
+
+function closeModal() {
+  showModal.value = false;
+  currentVideoId.value = null;
+}
 </script>
 
 <template>
   <div class="container-fluid packages">
-    <!-- Animated background -->
     <div class="animated-bg"></div>
 
     <div class="container py-5 position-relative">
@@ -30,33 +42,7 @@ function extractVideoID(url) {
         <h1 class="mb-0">Success Stories</h1>
       </div>
 
-      <!-- Swiper Carousel -->
-      <div class="carousel-container">
-        <Swiper
-          :modules="[Pagination, Navigation, Autoplay]"
-          :slides-per-view="4"
-          :space-between="20"
-          :loop="stories.length >= 1"
-          :autoplay="{ delay: 3000, disableOnInteraction: false }"
-          :pagination="{ clickable: true }"
-          navigation
-          :breakpoints="{
-            0: { slidesPerView: 1, spaceBetween: 10 },
-            576: { slidesPerView: 2, spaceBetween: 15 },
-            768: { slidesPerView: 3, spaceBetween: 15 },
-            992: { slidesPerView: 4, spaceBetween: 15 }
-          }"
-          class="mySwiper"
-        >
-          <SwiperSlide v-for="story in stories" :key="story.id">
-           <div class="ratio ratio-16x9">
-              <iframe loading="lazy" :src="`//www.youtube.com/embed/${extractVideoID(story.video)}`" title="YouTube video player" allowfullscreen></iframe>
-            </div>
-          </SwiperSlide>
-        </Swiper>
-      </div>
-
-       <!-- Swiper Carousel -->
+          <!-- Swiper Carousel -->
       <div class="carousel-container mt-4">
         <Swiper
           :modules="[Pagination, Navigation, Autoplay]"
@@ -81,11 +67,62 @@ function extractVideoID(url) {
           </SwiperSlide>
         </Swiper>
       </div>
+
+      <div class="carousel-container mt-4">
+        <Swiper
+          :modules="[Pagination, Navigation, Autoplay]"
+          :slides-per-view="4"
+          :space-between="20"
+          :loop="stories.length >= 1"
+          :autoplay="{ delay: 3000, disableOnInteraction: false }"
+          :pagination="{ clickable: true }"
+          navigation
+          :breakpoints="{
+            0: { slidesPerView: 1, spaceBetween: 10 },
+            576: { slidesPerView: 2, spaceBetween: 15 },
+            768: { slidesPerView: 3, spaceBetween: 15 },
+            992: { slidesPerView: 4, spaceBetween: 15 }
+          }"
+          class="mySwiper"
+        >
+          <SwiperSlide v-for="story in stories" :key="story.id">
+            <div
+              class="ratio ratio-16x9"
+              @click="openModal(story.video)"
+              style="cursor: pointer"
+            >
+
+              <img
+                :src="`https://img.youtube.com/vi/${extractVideoID(story.video)}/hqdefault.jpg`"
+                alt="Video Thumbnail"
+                style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px"
+              />
+              <div class="play-button">&#9658;</div>
+            </div>
+          </SwiperSlide>
+        </Swiper>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div v-if="showModal" class="modal-overlay" @click.self="closeModal">
+      <div class="modal-content">
+        <button class="close-btn" @click="closeModal">&times;</button>
+        <iframe
+          v-if="currentVideoId"
+          :src="`https://www.youtube.com/embed/${currentVideoId}?autoplay=1`"
+          frameborder="0"
+          allow="autoplay; encrypted-media"
+          allowfullscreen
+          class="modal-video"
+        ></iframe>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
+
 .container-fluid.packages {
   position: relative;
   overflow: hidden;
@@ -196,29 +233,66 @@ function extractVideoID(url) {
   overflow: hidden;
 }
 
-.mySwiper {
-  width: 100%;
+.story-card {
   position: relative;
+  border-radius: 10px;
   overflow: hidden;
+  transition: transform 0.3s ease;
+}
+.story-card:hover {
+  transform: scale(1.05);
+}
+.play-button {
+  position: absolute;
+  font-size: 50px;
+  color: rgba(255, 255, 255, 0.8);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.modal-content {
+  position: relative;
+  max-width: 900px;
+  width: 100%;
+  background: #000;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 30px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.modal-video {
+  width: 100%;
+  height: 500px;
 }
 
 .rtl-mySwiper {
-  width: 100%;
-  position: relative;
-  overflow: hidden;
   direction: rtl;
 }
-/* Navigation button styling */
-.swiper-button-next {
-  right: -40px;
-  color: #00d4ff;
-  z-index: 10;
-}
-
-.swiper-button-prev {
-  left: -40px;
-  color: #00d4ff;
-  z-index: 10;
-}
 </style>
-

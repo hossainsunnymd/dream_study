@@ -25,7 +25,7 @@ class ResetPasswordController extends Controller
     //verify email
     public function verifyEmail(EmailVerifyRequest $request)
     {
-        // return $request->all();
+
         try {
             $count = User::where('email', '=', $request->input('email'))->count();
             if ($count == 1) {
@@ -37,6 +37,11 @@ class ResetPasswordController extends Controller
                 return redirect()->back()->with([
                     'status' => true,
                     'message' => "Otp Sent Successfully"
+                ]);
+            }else{
+                return redirect()->back()->with([
+                    'status' => false,
+                    'message' => "Email Not Found"
                 ]);
             }
         } catch (Exception $e) {

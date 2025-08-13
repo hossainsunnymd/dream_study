@@ -8,7 +8,8 @@ class Country extends Model
 {
     protected $fillable = [
         'country_name',
-        'country_flag'
+        'country_flag',
+        'rank'
     ];
 
     public function countryDetail(){

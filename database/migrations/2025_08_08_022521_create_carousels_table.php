@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->integer('rank')->unique();
             $table->string('image');
+            $table->string('title');
+            $table->text('description');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });

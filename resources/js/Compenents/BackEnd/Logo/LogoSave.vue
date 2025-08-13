@@ -17,33 +17,9 @@
               </div>
 
               <div class="col-12 col-md-6 mb-3">
-                <label class="form-label">Facebook Logo</label>
-                <FacebookLogo :faceBookLogo="form.fb_logo" @image="e => form.fb_logo = e" />
-                <div v-if="errors.fb_logo" class="text-danger">{{ errors.fb_logo[0] }}</div>
-              </div>
-
-              <div class="col-12 col-md-6 mb-3">
-                <label class="form-label">Twitter Logo</label>
-                <TwitterLogo :twitterLogo="form.twitter_logo" @image="e => form.twitter_logo = e" />
-                <div v-if="errors.twitter_logo" class="text-danger">{{ errors.twitter_logo[0] }}</div>
-              </div>
-
-              <div class="col-12 col-md-6 mb-3">
-                <label class="form-label">Instagram Logo</label>
-                <InstragramLogo :instragramLogo="form.instagram_logo" @image="e => form.instagram_logo = e" />
-                <div v-if="errors.instagram_logo" class="text-danger">{{ errors.instagram_logo[0] }}</div>
-              </div>
-
-              <div class="col-12 col-md-6 mb-3">
-                <label class="form-label">LinkedIn Logo</label>
-                <LinkedInLogo :linkedinLogo="form.linkedin_logo" @image="e => form.linkedin_logo = e" />
-                <div v-if="errors.linkedin_logo" class="text-danger">{{ errors.linkedin_logo[0] }}</div>
-              </div>
-
-              <div class="col-12 col-md-6 mb-3">
-                <label class="form-label">YouTube Logo</label>
-                <YouTubeLogo :youtubeLogo="form.youtube_logo" @image="e => form.youtube_logo = e" />
-                <div v-if="errors.youtube_logo" class="text-danger">{{ errors.youtube_logo[0] }}</div>
+                <label class="form-label">Payment Image</label>
+                <PaymentImage :paymentImage="form.paymentImage" @image="e => form.paymentImage = e" />
+                <div v-if="errors.paymentImage" class="text-danger">{{ errors.paymentImage[0] }}</div>
               </div>
 
               <div class="col-12 col-md-6 mb-3">
@@ -122,6 +98,7 @@
               </div>
             </div>
 
+
             <!-- Quill Editors -->
             <div class="mb-3">
               <label class="form-label">About Content</label>
@@ -157,11 +134,6 @@ import "@vueup/vue-quill/dist/vue-quill.snow.css";
 
 // Image components
 import SiteFabicon from "./SiteFavicon.vue";
-import FacebookLogo from "./FacebookLogo.vue";
-import TwitterLogo from "./TwitterLogo.vue";
-import InstragramLogo from "./InstragramLogo.vue";
-import LinkedInLogo from "./LinkedInLogo.vue";
-import YouTubeLogo from "./YouTubeLogo.vue";
 import AboutBannerImage from "./AboutBannerImage.vue";
 import AboutHeroImage from "./AboutHeroImage.vue";
 import LoginBannerImage from "./LoginBannerImage.vue";
@@ -172,6 +144,7 @@ import BookingBannerImage from "./BookingBannerImage.vue";
 import VerifyOtpBannerImage from "./VerifyOtpBannerImage.vue";
 import ResetPasswordBannerImage from "./ResetPasswordBannerImage.vue";
 import VerifyEmailBannerImage from "./VerifyEmailBannerImage.vue";
+import PaymentImage from "./PaymentImage.vue";
 import SiteLogo from "./SiteLogo.vue";
 
 
@@ -212,6 +185,8 @@ const form = useForm({
   verify_otp_banner_image: "",
   verify_email_banner_image: "",
   reset_password_banner_image: "",
+  payment_image: "",
+  google_map_link: "",
 });
 
 if (logo_id != 0 && logo != null) {
@@ -249,6 +224,7 @@ const textFields = [
   "site_email",
   "site_phone",
   "site_fax",
+  "google_map_link",
 ];
 </script>
 

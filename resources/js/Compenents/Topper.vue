@@ -1,21 +1,49 @@
 <script setup>
-import { Link, usePage } from '@inertiajs/vue3';
+import { Link, usePage } from "@inertiajs/vue3";
 const page = usePage();
 </script>
 
 <template>
-    <div class="container-fluid bg-dark text-white py-2 px-5 d-none d-lg-block animate__animated animate__fadeInDown">
+    <div
+        class="container-fluid bg-dark text-white py-2 px-5 d-none d-lg-block animate__animated animate__fadeInDown"
+    >
         <div class="row align-items-center">
             <!-- Left Social Icons -->
             <div class="col-lg-8 d-flex align-items-center gap-2">
-                <a
-                    v-for="(icon, index) in ['twitter', 'facebook-f', 'linkedin-in', 'instagram', 'youtube']"
-                    :key="index"
-                    :href="'#'"
+                <Link
+                    :href="page.props.setting.twitter_link?page.props.setting.twitter_link:'#'"
                     class="btn btn-sm btn-outline-light btn-sm-square rounded-circle hover-float"
                 >
-                    <i :class="`fab fa-${icon}`"></i>
-                </a>
+                    <i class="fab fa-twitter"></i>
+                </Link>
+
+                <Link
+                    :href="page.props.setting.fb_link?page.props.setting.fb_link:'#'"
+                    class="btn btn-sm btn-outline-light btn-sm-square rounded-circle hover-float"
+                >
+                    <i class="fab fa-facebook-f"></i>
+                </Link>
+
+                <Link
+                    :href="page.props.setting.linkedin_link?page.props.setting.linkedin_link:'#'"
+                    class="btn btn-sm btn-outline-light btn-sm-square rounded-circle hover-float"
+                >
+                    <i class="fab fa-linkedin-in"></i>
+                </Link>
+
+                <Link
+                    :href="page.props.setting.instagram_link?page.props.setting.instagram_link:'#'"
+                    class="btn btn-sm btn-outline-light btn-sm-square rounded-circle hover-float"
+                >
+                    <i class="fab fa-instagram"></i>
+                </Link>
+
+                <Link
+                    :href="page.props.setting.youtube_link?page.props.setting.youtube_link:'#'"
+                    class="btn btn-sm btn-outline-light btn-sm-square rounded-circle hover-float"
+                >
+                    <i class="fab fa-youtube"></i>
+                </Link>
             </div>
 
             <!-- Right Auth Links -->
@@ -33,18 +61,27 @@ const page = usePage();
                         href="/login"
                         class="text-white text-decoration-none hover-underline"
                     >
-                        <small><i class="fa fa-sign-in-alt me-1"></i>Login</small>
+                        <small
+                            ><i class="fa fa-sign-in-alt me-1"></i>Login</small
+                        >
                     </Link>
                     <Link
                         v-if="page.props.user.login"
                         href="/logout"
                         class="text-white text-decoration-none hover-underline"
                     >
-                        <small><i class="fa fa-sign-out-alt me-1"></i>Logout</small>
+                        <small
+                            ><i class="fa fa-sign-out-alt me-1"></i
+                            >Logout</small
+                        >
                     </Link>
                     <Link
                         v-if="page.props.user.login"
-                        :href="page.props.user.authUser.user_type === 'admin' ? '/admin/dashboard' : '/student/dashboard'"
+                        :href="
+                            page.props.user.authUser.user_type === 'admin'
+                                ? '/admin/dashboard'
+                                : '/student/dashboard'
+                        "
                         class="text-white text-decoration-none hover-underline"
                     >
                         <small><i class="fa fa-home me-1"></i>Dashboard</small>
@@ -76,7 +113,7 @@ const page = usePage();
     transition: color 0.3s ease;
 }
 .hover-underline::after {
-    content: '';
+    content: "";
     position: absolute;
     left: 0;
     bottom: -2px;

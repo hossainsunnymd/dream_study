@@ -191,16 +191,5 @@ const reviews = computed(() => page.props.reviews ?? []);
   overflow: hidden;
 }
 
-/* Navigation button styling */
-.swiper-button-next {
-  right: -40px;
-  color: #00d4ff;
-  z-index: 10;
-}
 
-.swiper-button-prev {
-  left: -40px;
-  color: #00d4ff;
-  z-index: 10;
-}
 </style>

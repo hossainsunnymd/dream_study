@@ -36,6 +36,7 @@ class ReviewController extends Controller
             'title' => $request->title,
             'description' => $request->description,
             'rating' => $request->rating,
+            'rank' => $request->rank
         ];
 
         if ($request->hasFile('image')) {
@@ -59,6 +60,7 @@ class ReviewController extends Controller
             'title' => $request->title,
             'description' => $request->description,
             'rating' => $request->rating,
+            'rank' => $request->rank
         ];
 
         if ($request->hasFile('image')) {

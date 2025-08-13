@@ -18,6 +18,7 @@ const form = useForm({
     image: "",
     description: "",
     rating: "",
+    rank: "",
 });
 
 if(review_id != 0 && review != null){
@@ -26,6 +27,7 @@ if(review_id != 0 && review != null){
     form.image = review.image;
     form.description = review.description;
     form.rating = review.rating;
+    form.rank = review.rank;
 
 }
 
@@ -56,10 +58,17 @@ function submitForm() {
           <h4 class="text-center mb-3">{{ review_id == 0 ? "Create Review" : "Update Review" }}</h4>
           <form @submit.prevent="submitForm">
             <div class="mb-3">
+              <label class="form-label">Rank</label>
+              <input v-model="form.rank" type="text" class="form-control" />
+              <div v-if="errors.rank" class="text-danger">{{ errors.rank[0] }}</div>
+            </div>
+
+              <div class="mb-3">
               <label class="form-label">Name</label>
               <input v-model="form.name" type="text" class="form-control" />
               <div v-if="errors.name" class="text-danger">{{ errors.name[0] }}</div>
             </div>
+
 
              <div class="mb-3">
               <label class="form-label">Title</label>

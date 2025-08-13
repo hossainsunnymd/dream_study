@@ -10,6 +10,7 @@ const page = usePage();
 const headers = [
     { text: "image", value: "image" },
     { text: "video", value: "video" },
+    { text: "Rank", value: "rank" },
     { text: "Action", value: "action" },
 ];
 

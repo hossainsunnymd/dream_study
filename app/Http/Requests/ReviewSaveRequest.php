@@ -27,6 +27,7 @@ class ReviewSaveRequest extends FormRequest
             'rating' => 'required|numeric|min:1|max:5',
             // 'image' => $this->hasFile('image') ? 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:100' : 'required|string',
             'description' => 'required|string',
+            'rank' => 'required|integer|min:1|unique:reviews,rank,' . $this->route('id'),
         ];
     }
 }

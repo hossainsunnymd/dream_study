@@ -14,11 +14,15 @@ const errors = computed(() => page.props.errors || {});
 const form = useForm({
     rank: "",
     image: "",
+    title: "",
+    description: "",
 });
 
 if(carousel_id != 0 && carousel != null){
     form.rank = carousel.rank;
     form.image = carousel.image;
+    form.title = carousel.title;
+    form.description = carousel.description;
 
 }
 
@@ -52,6 +56,18 @@ function submitForm() {
               <label class="form-label">Carousel Rank</label>
               <input v-model="form.rank" type="text" class="form-control" />
               <div v-if="errors.rank" class="text-danger">{{ errors.rank[0] }}</div>
+            </div>
+
+             <div class="mb-3">
+              <label class="form-label">Title</label>
+              <input v-model="form.title" type="text" class="form-control" />
+              <div v-if="errors.title" class="text-danger">{{ errors.title[0] }}</div>
+            </div>
+
+             <div class="mb-3">
+              <label class="form-label">Description</label>
+              <input v-model="form.description" type="text" class="form-control" />
+              <div v-if="errors.description" class="text-danger">{{ errors.description[0] }}</div>
             </div>
 
             <div class="mb-3">

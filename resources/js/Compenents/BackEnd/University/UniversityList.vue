@@ -13,12 +13,12 @@ const headers = [
     { text: "University Name", value: "name" },
     { text: "Title", value: "title" },
     { text: "Image", value: "image" },
+    { text: "Rank", value: "rank" },
     { text: "Action", value: "action" },
 ];
 
 // Users and search fields
 const items = ref(page.props.universities || []);
-console.log(items.value);
 
 const searchField = ref(["id", "name"]);
 const searchItem = ref();

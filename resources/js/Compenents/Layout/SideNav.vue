@@ -202,7 +202,7 @@ function toggleSidebar() {
                         <i class="fa fa-user-graduate me-2"></i> Students
                     </Link>
 
-                       <!-- Pages -->
+                    <!-- Pages -->
                     <Link
                         v-if="page.props.user.can['page-list']"
                         href="/admin/pages"
@@ -228,7 +228,7 @@ function toggleSidebar() {
                         <i class="fa fa-file-alt me-2"></i> Page Contents
                     </Link>
 
-                       <!-- Page contents -->
+                    <!-- Logo/Banner -->
                     <Link
                         v-if="page.props.user.can['logo-list']"
                         href="/admin/logos"
@@ -238,10 +238,10 @@ function toggleSidebar() {
                         ]"
                         style="text-decoration: none"
                     >
-                        <i class="fa fa-file-alt me-2"></i> Logo/Banner
+                        <i class="fa fa-image me-2"></i> Logo/Banner
                     </Link>
 
-                      <!-- Carousels -->
+                    <!-- Carousels -->
                     <Link
                         v-if="page.props.user.can['carousel-list']"
                         href="/admin/carousels"
@@ -251,7 +251,7 @@ function toggleSidebar() {
                         ]"
                         style="text-decoration: none"
                     >
-                        <i class="fa fa-file-alt me-2"></i> Carousels
+                        <i class="fa fa-images me-2"></i> Carousels
                     </Link>
                 </div>
             </nav>

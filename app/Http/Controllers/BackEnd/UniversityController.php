@@ -16,7 +16,7 @@ class UniversityController extends Controller
     public function universityList()
     {
 
-        $universities = University::with('country.countryDetail')->get();
+        $universities = University::with('country.countryDetail')->orderBy('rank', 'asc')->get();
         return Inertia::render('BackEnd/University/UniversityListPage', ['universities' => $universities]);
     }
 

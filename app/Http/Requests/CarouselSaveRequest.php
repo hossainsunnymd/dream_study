@@ -24,6 +24,8 @@ class CarouselSaveRequest extends FormRequest
         return [
             // 'image' => $this->hasFile('image') ? 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:100' : 'required|string',
             'rank' => 'required|integer|min:1|unique:carousels,rank,' . $this->route('id'),
+            'title' => 'required|string',
+            'description' => 'required|string',
         ];
     }
 }

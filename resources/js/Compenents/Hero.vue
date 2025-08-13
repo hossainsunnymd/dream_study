@@ -1,184 +1,222 @@
 <script setup>
+import { usePage, router } from "@inertiajs/vue3"; // router import দরকার
+import { computed, ref, onMounted } from "vue";
+import { Swiper, SwiperSlide } from "swiper/vue";
+import { Pagination, Navigation, Autoplay } from "swiper/modules";
+
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+
+const page = usePage();
+const carousels = computed(() => page.props.carousels ?? []);
+const selectedCountry = ref(null);
+const selectedCountryId = ref(null);
+const showDropdown = ref(false);
+
+// Small screen check
+const isSmallScreen = computed(() => window.innerWidth < 768);
+
+// Animation trigger
+const showSearchBar = ref(false);
+
+onMounted(() => {
+    setTimeout(() => {
+        showSearchBar.value = true;
+    }, 300);
+
+    // Optional: update screen size dynamically
+    window.addEventListener("resize", () => {
+        isSmallScreen.value = window.innerWidth < 768;
+    });
+});
+
+function toggleDropdown() {
+    showDropdown.value = !showDropdown.value;
+}
+
+function selectCountry(country) {
+    selectedCountry.value = country;
+    selectedCountryId.value = country.id;
+    showDropdown.value = false;
+
+    router.get(
+        `/country-by-id/${country.id}`,
+        {},
+        {
+            preserveScroll: true,
+            preserveState: true,
+        }
+    );
+}
 </script>
 
 <template>
     <!-- Carousel Start -->
     <div class="carousel-header">
-        <div id="carouselId" class="carousel slide" data-bs-ride="carousel">
-            <ol class="carousel-indicators">
-                <li
-                    data-bs-target="#carouselId"
-                    data-bs-slide-to="0"
-                    class="active"
-                ></li>
-                <li data-bs-target="#carouselId" data-bs-slide-to="1"></li>
-                <li data-bs-target="#carouselId" data-bs-slide-to="2"></li>
-            </ol>
-            <div class="carousel-inner" role="listbox">
-                <div class="carousel-item active">
-                    <img
-                        src="../img/carousel-2.jpg"
-                        class="img-fluid"
-                        alt="Image"
-                    />
-                    <div class="carousel-caption">
-                        <div class="p-3" style="max-width: 900px">
-                            <h4
-                                class="text-white text-uppercase fw-bold mb-4"
-                                style="letter-spacing: 3px"
-                            >
-                                Explore The World
-                            </h4>
-                            <h1
-                                class="display-2 text-capitalize text-white mb-4"
-                            >
-                                Let's The World Together!
-                            </h1>
-                            <p class="mb-5 fs-5">
-                                Lorem Ipsum is simply dummy text of the printing
-                                and typesetting industry. Lorem Ipsum has been
-                                the industry's standard dummy text ever since
-                                the 1500s,
-                            </p>
-                            <div
-                                class="d-flex align-items-center justify-content-center"
-                            >
-                                <a
-                                    class="btn-hover-bg btn btn-primary rounded-pill text-white py-3 px-5"
-                                    href="#"
-                                    >Discover Now</a
-                                >
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img
-                        src="../img/carousel-1.jpg"
-                        class="img-fluid"
-                        alt="Image"
-                    />
-                    <div class="carousel-caption">
-                        <div class="p-3" style="max-width: 900px">
-                            <h4
-                                class="text-white text-uppercase fw-bold mb-4"
-                                style="letter-spacing: 3px"
-                            >
-                                Explore The World
-                            </h4>
-                            <h1
-                                class="display-2 text-capitalize text-white mb-4"
-                            >
-                                Find Your Perfect Tour At Travel
-                            </h1>
-                            <p class="mb-5 fs-5">
-                                Lorem Ipsum is simply dummy text of the printing
-                                and typesetting industry. Lorem Ipsum has been
-                                the industry's standard dummy text ever since
-                                the 1500s,
-                            </p>
-                            <div
-                                class="d-flex align-items-center justify-content-center"
-                            >
-                                <a
-                                    class="btn-hover-bg btn btn-primary rounded-pill text-white py-3 px-5"
-                                    href="#"
-                                    >Discover Now</a
-                                >
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img
-                        src="../img/carousel-3.jpg"
-                        class="img-fluid"
-                        alt="Image"
-                    />
-                    <div class="carousel-caption">
-                        <div class="p-3" style="max-width: 900px">
-                            <h4
-                                class="text-white text-uppercase fw-bold mb-4"
-                                style="letter-spacing: 3px"
-                            >
-                                Explore The World
-                            </h4>
-                            <h1
-                                class="display-2 text-capitalize text-white mb-4"
-                            >
-                                You Like To Go?
-                            </h1>
-                            <p class="mb-5 fs-5">
-                                Lorem Ipsum is simply dummy text of the printing
-                                and typesetting industry. Lorem Ipsum has been
-                                the industry's standard dummy text ever since
-                                the 1500s,
-                            </p>
-                            <div
-                                class="d-flex align-items-center justify-content-center"
-                            >
-                                <a
-                                    class="btn-hover-bg btn btn-primary rounded-pill text-white py-3 px-5"
-                                    href="#"
-                                    >Discover Now</a
-                                >
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <button
-                class="carousel-control-prev"
-                type="button"
-                data-bs-target="#carouselId"
-                data-bs-slide="prev"
+        <Swiper
+            :modules="[Pagination, Navigation, Autoplay]"
+            :slides-per-view="1"
+            :loop="carousels.length > 1"
+            :autoplay="{ delay: 2000, disableOnInteraction: false }"
+            :pagination="{ clickable: true }"
+            navigation
+            class="mySwiper"
+        >
+            <SwiperSlide
+                v-for="(carousel, index) in carousels"
+                :key="carousel.id"
             >
-                <span
-                    class="carousel-control-prev-icon btn bg-primary"
-                    aria-hidden="false"
-                ></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button
-                class="carousel-control-next"
-                type="button"
-                data-bs-target="#carouselId"
-                data-bs-slide="next"
-            >
-                <span
-                    class="carousel-control-next-icon btn bg-primary"
-                    aria-hidden="false"
-                ></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div>
+                <div class="carousel-slide-content position-relative">
+                    <img
+                        :src="`/storage/carousel/${carousel.image}`"
+                        class="img-fluid w-100"
+                        style="max-height: 700px; object-fit: cover"
+                        alt="Carousel Image"
+                    />
+                    <div
+                        class="carousel-caption position-absolute top-50 start-50 translate-middle text-center text-white px-3"
+                    >
+                        <h1 class="display-2 text-capitalize mb-4">
+                            {{ carousel.title }}
+                        </h1>
+                        <p class="fs-5">{{ carousel.description }}</p>
+                    </div>
+                </div>
+            </SwiperSlide>
+        </Swiper>
     </div>
     <!-- Carousel End -->
+
+    <!-- Animated Search Bar -->
     <div
-        class="container-fluid search-bar position-relative"
-        style="top: -50%; transform: translateY(-50%)"
+        v-if="showSearchBar"
+        class="container-fluid search-bar position-absolute start-50 translate-middle-x"
+        style="top: 80%; z-index: 10"
     >
         <div class="container">
             <div
                 class="position-relative rounded-pill w-100 mx-auto p-5"
                 style="background: rgba(19, 53, 123, 0.8)"
             >
-                <input
-                    class="form-control border-0 rounded-pill w-100 py-3 ps-4 pe-5"
-                    type="text"
-                    placeholder="Eg: Thailand"
-                />
-                <button
-                    type="button"
-                    class="btn btn-primary rounded-pill py-2 px-4 position-absolute me-2"
-                    style="top: 50%; right: 46px; transform: translateY(-50%)"
+                <p
+                    class="nav-item dropdown"
+                    style="
+                        background-color: white;
+                        border-radius: 10px;
+                        text-decoration: none;
+                    "
                 >
-                    Search
-                </button>
+                    <!-- Dropdown toggle -->
+                 <a
+                    href="#"
+                    class="nav-link dropdown-toggle d-flex align-items-center"
+                    @click.prevent="toggleDropdown"
+                    style="
+                        width: auto;
+                        height: 40px;
+                        border-radius: 50px;
+                        background-color: white;
+                        padding: 0 10px;
+                        text-decoration: none;
+                    "
+                >
+    <!-- Flag circular -->
+    <img
+        v-if="selectedCountry"
+        :src="`/storage/country/${selectedCountry.country_flag}`"
+        alt="flag"
+        style="
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+        "
+    />
+    <!-- Default text -->
+    <span
+        v-else
+        style="font-size: 14px; margin-left: 10px;"
+    >
+        Country
+    </span>
+</a>
+
+
+                    <!-- Dropdown menu -->
+                    <div
+                        :class="[
+                            'dropdown-menu country-dropdown',
+                            { 'd-block': showDropdown },
+                        ]"
+                        style="max-height: 250px; overflow-y: auto; padding: 0"
+                    >
+                        <ul
+                            class="list-unstyled m-0 p-2"
+                        >
+                            <li
+                                v-for="(country, index) in page.props.countries"
+                                :key="index"
+                                @click.stop="selectCountry(country)"
+                                class="dropdown-item d-flex align-items-center gap-2 hover-country"
+                                style="
+                                    background-color: white;
+                                    border-radius: 100%;
+                                    text-decoration: none;
+                                    height: 35px;
+                                    align-items: center;
+                                    cursor: pointer;
+                                "
+                            >
+                                <img
+                                    :src="`/storage/country/${country.country_flag}`"
+                                    alt="flag"
+                                    style="
+                                        width: 20px;
+                                        height: 14px;
+                                        object-fit: cover;
+                                    "
+                                />
+                               <span class="text-black"> {{ country.country_name }}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </p>
             </div>
         </div>
     </div>
 </template>
 
 <style scoped>
+.carousel-header {
+    position: relative;
+    background-color: #0a192f;
+    overflow: hidden;
+}
+
+.carousel-slide-content {
+    position: relative;
+}
+
+.carousel-caption {
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+    color: white;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 1rem;
+    border-radius: 50%;
+}
+
+.swiper-pagination-bullet {
+    background: white;
+    opacity: 0.7;
+}
+
+.swiper-pagination-bullet-active {
+    background: #0d6efd; /* Bootstrap primary */
+    opacity: 1;
+}
 </style>

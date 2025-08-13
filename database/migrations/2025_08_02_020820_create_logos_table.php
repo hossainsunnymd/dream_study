@@ -12,18 +12,12 @@ return new class extends Migration {
     {
         Schema::create('logos', function (Blueprint $table) {
             $table->id();
-            $table->string('site_name')->nullable();
             $table->string('site_favicon')->nullable();
             $table->string('site_logo')->nullable();
-            $table->string('fb_logo')->nullable();
             $table->longText('fb_link')->nullable();
-            $table->string('twitter_logo')->nullable();
             $table->longText('twitter_link')->nullable();
-            $table->string('instagram_logo')->nullable();
             $table->longText('instagram_link')->nullable();
-            $table->string('linkedin_logo')->nullable();
             $table->longText('linkedin_link')->nullable();
-            $table->string('youtube_logo')->nullable();
             $table->longText('youtube_link')->nullable();
             $table->string('about_banner_image')->nullable();
             $table->string('about_hero_image')->nullable();

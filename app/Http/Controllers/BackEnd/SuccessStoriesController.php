@@ -32,6 +32,7 @@ class SuccessStoriesController extends Controller
 
         $data = [
             'video' => $request->video,
+            'rank' => $request->rank
         ];
         if ($request->hasFile('image')) {
             $image = $request->file('image');
@@ -50,6 +51,7 @@ class SuccessStoriesController extends Controller
 
         $data = [
             'video' => $request->video,
+            'rank' => $request->rank
         ];
 
         if ($request->hasFile('image')) {

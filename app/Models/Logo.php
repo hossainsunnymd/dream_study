@@ -7,18 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Logo extends Model
 {
    protected $fillable = [
-    'site_name',
     'site_favicon',
     'site_logo',
-    'fb_logo',
     'fb_link',
-    'twitter_logo',
     'twitter_link',
-    'instagram_logo',
     'instagram_link',
-    'linkedin_logo',
     'linkedin_link',
-    'youtube_logo',
     'youtube_link',
     'about_banner_image',
     'about_hero_image',

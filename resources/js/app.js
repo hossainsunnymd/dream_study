@@ -7,13 +7,8 @@ import "bootstrap";
 import "./bootstrap";
 import "../css/SideNav.css";
 import "../css/style.css";
-import NProgress from 'nprogress'
-
-
-
-
-
-
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import NProgress from 'nprogress';
 
 createInertiaApp({
   resolve: name => {
@@ -35,8 +30,3 @@ router.on('start', () => {
 router.on('finish', () => {
   NProgress.done()
 });
-
-
-router.on('progress', progress => {
-  console.log(progress)
-})

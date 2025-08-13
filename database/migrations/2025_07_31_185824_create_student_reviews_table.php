@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->longText('description');
             $table->decimal('rating')->nullable();
+            $table->integer('rank')->unique();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\AdminMiddleware;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\FrontEnd\PageController;
 use App\Http\Controllers\BackEnd\BookingController;
 use App\Http\Controllers\FrontEnd\ProfileController;
@@ -47,8 +48,20 @@ Route::middleware([TokenVerificationMiddleware::class, AdminMiddleware::class])-
     require_once __DIR__ . '/University.php';
     require_once __DIR__ . '/Logo.php';
     require_once __DIR__ . '/Carousel.php';
+
 });
 
 
+Route::get('/initiate-payment', [PaymentController::class, 'paymentInit']);
 
+Route::get('/payment/success', function () {
+    return redirect('/student/dashboard')->with(['status' => true, 'message' => 'Payment successful']);
+});
 
+Route::get('/payment/cancel', function () {
+    return redirect('/student/dashboard')->with(['status' => false, 'message' => 'Payment cancel']);
+});
+
+Route::get('/payment/fail', function () {
+    return redirect('/student/dashboard')->with(['status' => false, 'message' => 'Payment fail']);
+});

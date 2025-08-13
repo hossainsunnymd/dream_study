@@ -30,7 +30,6 @@ class LogoController extends Controller
     {
 
         $data = $request->only([
-            'site_name',
             'fb_link',
             'twitter_link',
             'instagram_link',
@@ -42,16 +41,12 @@ class LogoController extends Controller
             'site_email',
             'site_phone',
             'site_fax',
+            'google_map_link',
         ]);
 
         $fileFields = [
-          'site_favicon',
+            'site_favicon',
             'site_logo',
-            'fb_logo',
-            'twitter_logo',
-            'instagram_logo',
-            'linkedin_logo',
-            'youtube_logo',
             'about_banner_image',
             'about_hero_image',
             'login_banner_image',
@@ -62,6 +57,7 @@ class LogoController extends Controller
             'verify_email_banner_image',
             'verify_otp_banner_image',
             'reset_password_banner_image',
+            'payment_image',
         ];
 
         foreach ($fileFields as $field) {
@@ -84,11 +80,10 @@ class LogoController extends Controller
     //update logo
     public function logoUpdate( Request $request, $logo_id)
     {
-   
+
         $siteSetting = Logo::findOrFail($logo_id);
 
         $data = $request->only([
-            'site_name',
             'fb_link',
             'twitter_link',
             'instagram_link',
@@ -100,16 +95,12 @@ class LogoController extends Controller
             'site_email',
             'site_phone',
             'site_fax',
+            'google_map_link',
         ]);
 
         $fileFields = [
             'site_favicon',
             'site_logo',
-            'fb_logo',
-            'twitter_logo',
-            'instagram_logo',
-            'linkedin_logo',
-            'youtube_logo',
             'about_banner_image',
             'about_hero_image',
             'login_banner_image',
@@ -120,6 +111,7 @@ class LogoController extends Controller
             'verify_email_banner_image',
             'verify_otp_banner_image',
             'reset_password_banner_image',
+            'payment_image',
 
         ];
 
@@ -153,17 +145,17 @@ class LogoController extends Controller
         $fileFields = [
             'site_favicon',
             'site_logo',
-            'fb_logo',
-            'twitter_logo',
-            'instagram_logo',
-            'linkedin_logo',
-            'youtube_logo',
             'about_banner_image',
             'about_hero_image',
             'login_banner_image',
             'register_banner_image',
             'service_banner_image',
             'contact_banner_image',
+            'booking_banner_image',
+            'verify_email_banner_image',
+            'verify_otp_banner_image',
+            'reset_password_banner_image',
+            'payment_image',
         ];
 
         foreach ($fileFields as $field) {

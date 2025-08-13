@@ -14,7 +14,7 @@ class CarouselController extends Controller
     //carousel list
     public function carouselList(Request $request)
     {
-        $carousels = Carousel::all();
+        $carousels = Carousel::orderBy('rank', 'asc')->get();
         return Inertia::render('BackEnd/Carousel/CarouselListPage', ['carousels' => $carousels]);
     }
 
@@ -28,7 +28,12 @@ class CarouselController extends Controller
     //carousel save
     public function carouselSave(CarouselSaveRequest $request)
     {
-        $data = ['rank' => $request->rank];
+        $data = [
+            'rank' => $request->rank,
+            'title' => $request->title,
+            'description' => $request->description
+        ];
+
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '.' . $image->getClientOriginalName();
@@ -44,7 +49,11 @@ class CarouselController extends Controller
     {
 
 
-        $data = ['rank' => $request->rank];
+        $data = [
+            'rank' => $request->rank,
+            'title' => $request->title,
+            'description' => $request->description
+        ];
 
 
         $carousel = Carousel::findOrFail($carousel_id);

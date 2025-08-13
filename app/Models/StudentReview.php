@@ -12,5 +12,6 @@ class StudentReview extends Model
         'image',
         'description',
         'rating',
+        'rank'
     ];
 }

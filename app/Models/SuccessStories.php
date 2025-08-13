@@ -9,5 +9,6 @@ class SuccessStories extends Model
     protected $fillable=[
         'video',
         'image',
+        'rank',
     ];
 }

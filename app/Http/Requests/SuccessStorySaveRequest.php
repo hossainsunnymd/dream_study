@@ -23,6 +23,7 @@ class SuccessStorySaveRequest extends FormRequest
     {
         return [
             // 'image' => $this->hasFile('image') ? 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:100' : 'required|string',
+            'rank' => 'required|integer|min:1|unique:success_stories,rank,' . $this->route('id'),
         ];
     }
 }

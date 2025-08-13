@@ -10,6 +10,7 @@ const page = usePage();
 const headers = [
     { text: "Image", value: "country_flag" },
     { text: "Name", value: "country_name" },
+    { text: "Rank", value: "rank" },
     { text: "Action", value: "action" },
 ];
 

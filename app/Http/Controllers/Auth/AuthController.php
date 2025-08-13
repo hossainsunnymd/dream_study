@@ -42,7 +42,7 @@ class AuthController extends Controller
           if($user->user_type=='admin'){
             return redirect('/admin/dashboard')->cookie('token', $token, 60);
           }else{
-            return redirect('/student/dashboard')->cookie('token', $token, 60);
+            return redirect('/student/dashboard')->cookie('token', $token, 60)->with(['status'=>true,'message'=>'Login Successfully']);
           }
     }
 

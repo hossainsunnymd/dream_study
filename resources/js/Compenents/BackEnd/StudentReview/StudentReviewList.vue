@@ -13,6 +13,7 @@ const headers = [
     { text: "Image", value: "image" },
     { text: "Description", value: "description" },
     { text: "Rating", value: "rating" },
+    { text: "Rank", value: "rank" },
     { text: "Action", value: "action" },
 ];
 

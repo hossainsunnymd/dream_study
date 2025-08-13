@@ -14,11 +14,13 @@ const errors = computed(() => page.props.errors || {});
 const form = useForm({
     country_name: "",
     image: "",
+    rank: "",
 });
 
 if(country_id != 0 && country != null){
     form.country_name = country.country_name;
     form.image = country.country_flag;
+    form.rank = country.rank;
 
 }
 
@@ -49,6 +51,12 @@ function submitForm() {
           <h4 class="text-center mb-3">{{ country_id == 0 ? "Create Country" : "Update Country" }}</h4>
           <form @submit.prevent="submitForm">
             <div class="mb-3">
+              <label class="form-label">Rank</label>
+              <input v-model="form.rank" type="text" class="form-control" />
+              <div v-if="errors.rank" class="text-danger">{{ errors.rank[0] }}</div>
+            </div>
+
+              <div class="mb-3">
               <label class="form-label">Country Name</label>
               <input v-model="form.country_name" type="text" class="form-control" />
               <div v-if="errors.country_name" class="text-danger">{{ errors.country_name[0] }}</div>

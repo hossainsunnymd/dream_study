@@ -28,7 +28,10 @@ class CountryController extends Controller
     //country save
     public function countrySave(CountrySaveRequest $request)
     {
-        $data = ['country_name' => $request->country_name];
+        $data = [
+            'country_name' => $request->country_name,
+            'rank' => $request->rank
+        ];
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '.' . $image->getClientOriginalName();
@@ -44,7 +47,10 @@ class CountryController extends Controller
     {
 
 
-        $data = ['country_name' => $request->country_name];
+        $data = [
+            'country_name' => $request->country_name,
+            'rank' => $request->rank
+        ];
 
 
         $country = Country::findOrFail($country_id);

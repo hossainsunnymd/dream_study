@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('country_name');
             $table->string('country_flag');
+            $table->integer('rank')->unique();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });

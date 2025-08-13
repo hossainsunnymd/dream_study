@@ -7,12 +7,22 @@ import "swiper/css/navigation";
 import { computed } from "vue";
 import { usePage, Link } from "@inertiajs/vue3";
 import Footer from "../Footer.vue";
+import { Head } from "@inertiajs/vue3";
 
 const page = usePage();
 const universities = computed(() => page.props.universities ?? []);
 </script>
 
 <template>
+    <Head>
+        <title>
+            {{
+                page.props.country
+                    ? page.props.country.title
+                    : "Study Abroad"
+            }}
+        </title>
+    </Head>
     <!-- Header Start -->
     <div
         class="container-fluid bg-breadcrumb professional-header"

@@ -16,6 +16,11 @@ const page = usePage();
 </script>
 
 <template>
+    <!-- Home page এর body এর ভিতরে কোথাও যোগ করো -->
+<a href="https://wa.me/+8801732904423" target="_blank" class="whatsapp-float">
+  <i class="fab fa-whatsapp fa-3x text-white"></i>
+</a>
+
     <!-- Universities start -->
     <div class="container-fluid packages py-5">
         <div class="container py-5">
@@ -76,6 +81,18 @@ const page = usePage();
 </template>
 
 <style scoped>
+.whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.1);
+}
 /* Background gradient animation */
 @keyframes animatedBg {
     0% {

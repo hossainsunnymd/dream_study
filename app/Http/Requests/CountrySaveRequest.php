@@ -23,6 +23,7 @@ class CountrySaveRequest extends FormRequest
     {
         return [
             'country_name' => 'required|string|max:255',
+            'rank'=>'required|integer|min:1|unique:countries,rank,' . $this->route('id'),
             // 'country_image' => $this->hasFile('image') ? 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:100' : 'required|string',
         ];
     }

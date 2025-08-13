@@ -5,6 +5,7 @@ namespace App\Http\Controllers\BackEnd;
 use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Booking;
+use App\Models\Country;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BookingSaveRequest;
@@ -12,18 +13,30 @@ use App\Http\Requests\BookingSaveRequest;
 class BookingController extends Controller
 {
     //bookig list
-    public function bookingList(Request $request)
-    {
-        $fd = $request->fromDate ? date('Y-m-d', strtotime($request->fromDate)) : null;
-        $td = $request->toDate ? date('Y-m-d', strtotime($request->toDate)) : null;
-        $bookings = Booking::when($fd && $td, function ($q) use ($fd, $td) {
+  public function bookingList(Request $request)
+{
+    $fd = $request->fromDate ? date('Y-m-d', strtotime($request->fromDate)) : null;
+    $td = $request->toDate ? date('Y-m-d', strtotime($request->toDate)) : null;
+
+    $countries = Country::all();
+
+    $bookings = Booking::when($fd && $td, function ($q) use ($fd, $td) {
             $q->whereDate('created_at', '>=', $fd)
-                ->whereDate('created_at', '<=', $td);
-        })->when($request->status, function ($q) use ($request) {
+              ->whereDate('created_at', '<=', $td);
+        })
+        ->when($request->status, function ($q) use ($request) {
             $q->where('status', $request->status);
-        })->get();
-        return Inertia::render('BackEnd/Booking/BookingListPage', ['bookings' => $bookings]);
-    }
+        })
+        ->when($request->country_name, function ($q) use ($request) {
+            $q->where('prefferred_country', $request->country_name);
+        })
+        ->get();
+
+    return Inertia::render('BackEnd/Booking/BookingListPage', [
+        'bookings' => $bookings,
+        'countries' => $countries
+    ]);
+}
 
     //booking save page
     public function bookingSavePage(Request $request)

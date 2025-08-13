@@ -1,71 +1,105 @@
 <script setup>
-import { ref } from "vue";
-import { Link, router, usePage } from "@inertiajs/vue3";
+import { ref, watch, onMounted } from "vue";
+import { Link, usePage } from "@inertiajs/vue3";
 import { createToaster } from "@meforma/vue-toaster";
+import axios from "axios";
+
+const showModal = ref(false);
+
+function openModal() {
+  showModal.value = true;
+}
+
+function closeModal() {
+  showModal.value = false;
+}
 
 const toaster = createToaster({});
 const page = usePage();
 
-// Table headers
 const headers = [
-    { text: "ID", value: "id" },
-    { text: "Name", value: "name" },
-    { text: "Email", value: "email" },
-    { text: "BD Phone", value: "bd_mobile" },
-    { text: "Abroad Phone", value: "abroad_mobile" },
-    { text: "Preffered Country", value: "prefferred_country" },
-    { text: "Last Education", value: "last_education" },
-    { text: "Status", value: "status" },
+  { text: "ID", value: "id" },
+  { text: "Name", value: "name" },
+  { text: "Email", value: "email" },
+  { text: "BD Phone", value: "bd_mobile" },
+  { text: "Preffered Country", value: "prefferred_country" },
+  { text: "Last Education", value: "last_education" },
+  { text: "Status", value: "status" },
 ];
 
-// Users and search fields
 const items = ref(page.props.bookings || []);
-
 const searchField = ref(["id", "name", "email"]);
-const searchItem = ref();
+const searchItem = ref("");
 
-// Flash message toast
-if (page.props.flash.status === false) {
-    toaster.error(page.props.flash.message);
-} else if (page.props.flash.status === true) {
-    toaster.success(page.props.flash.message);
+
+// Payment gateway redirect
+async function goToGateway() {
+  closeModal();
+  try {
+    const response = await axios.get("/initiate-payment");
+    if (response.data?.GatewayPageURL) {
+      window.location.href = response.data.GatewayPageURL;
+    } else {
+      toaster.error("Payment initiation failed.");
+    }
+  } catch (error) {
+    toaster.error("Error during payment.");
+  }
 }
+
+if (page.props.flash.status==true) {
+  toaster.success(page.props.flash.message);
+}else if (page.props.flash.error==false) {
+  toaster.error(page.props.flash.message);
+}
+
 </script>
 
 <template>
-     <div v-if="page.props.user.authUser.is_active == 'Disable' " class="overlay">
+  <!-- Modal -->
+  <div v-if="showModal" class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Select Payment Method</h5>
+          <button type="button" class="btn-close" @click="closeModal"></button>
+        </div>
+        <div class="modal-body text-center">
+          <button class="btn btn-outline-danger me-3" @click="goToGateway()">Select Payment Method</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overlay if user is disabled -->
+  <div v-if="page.props.user?.authUser?.is_active === 'Disable'" class="overlay">
     <div class="overlay-content">
       <h4>Your ID is not active</h4>
       <p>Please contact admin for activation.</p>
     </div>
   </div>
-    <h3 class="fw-bold mb-4">My Bookings</h3>
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <!-- Search Input -->
-        <input
-            type="text"
-            class="form-control w-25"
-            v-model="searchItem"
-            placeholder="Search here"
-        />
 
-        <!-- Add Button -->
-        <Link href="/travel-booking" class="btn btn-success">
-            Add Booking
-        </Link>
+  <!-- Booking Section -->
+  <h3 class="fw-bold mb-4">My Bookings</h3>
+
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <input type="text" class="form-control w-25" v-model="searchItem" placeholder="Search here" />
+    <div>
+      <Link href="/travel-booking" class="btn btn-success me-2">Add Booking</Link>
+      <button @click="openModal" class="btn btn-success">Pay Now</button>
     </div>
+  </div>
 
-    <!-- Data Table -->
-    <EasyDataTable
-        :headers="headers"
-        :items="items"
-        :search-field="searchField"
-        :search-value="searchItem"
-        alternating
-        :rows-per-page="5"
-        table-class="table table-striped table-bordered"
-    >
-    </EasyDataTable>
+  <!-- Booking Table -->
+  <EasyDataTable
+    :headers="headers"
+    :items="items"
+    :search-field="searchField"
+    :search-value="searchItem"
+    alternating
+    :rows-per-page="5"
+    table-class="table table-striped table-bordered"
+  />
 </template>
 
 <style scoped>
@@ -89,5 +123,9 @@ if (page.props.flash.status === false) {
   padding: 40px;
   border-radius: 12px;
   box-shadow: 0 0 20px #000;
+}
+
+.modal {
+  z-index: 1050;
 }
 </style>

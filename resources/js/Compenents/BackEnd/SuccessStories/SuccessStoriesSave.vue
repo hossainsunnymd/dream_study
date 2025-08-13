@@ -14,11 +14,13 @@ const errors = computed(() => page.props.errors || {});
 const form = useForm({
     image: "",
     video: "",
+    rank: "",
 });
 
 if(success_id != 0 && successStory != null){
     form.image = successStory.image;
     form.video = successStory.video;
+    form.rank = successStory.rank;
 
 }
 
@@ -50,9 +52,16 @@ function submitForm() {
           <form @submit.prevent="submitForm">
 
              <div class="mb-3">
+              <label class="form-label">Rank</label>
+              <input v-model="form.rank" type="text" class="form-control" />
+              <div v-if="errors.rank" class="text-danger">{{ errors.rank[0] }}</div>
+            </div>
+
+            <div class="mb-3">
               <label class="form-label">Success Video Link</label>
               <input v-model="form.video" type="text" class="form-control" />
             </div>
+
 
             <div class="mb-3">
               <SuccessImage :successImage="form.image" @image="(e)=> form.image = e" />

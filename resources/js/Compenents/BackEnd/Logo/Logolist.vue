@@ -7,18 +7,12 @@ const toaster = createToaster({});
 const page = usePage();
 
 const headers = [
-  { text: "Site Name", value: "site_name" },
   { text: "Site Favicon", value: "site_favicon" },
   { text: "Site Logo", value: "site_logo" },
-  { text: "FB Logo", value: "fb_logo" },
   { text: "FB Link", value: "fb_link" },
-  { text: "Twitter Logo", value: "twitter_logo" },
   { text: "Twitter Link", value: "twitter_link" },
-  { text: "Instagram Logo", value: "instagram_logo" },
   { text: "Instagram Link", value: "instagram_link" },
-  { text: "LinkedIn Logo", value: "linkedin_logo" },
   { text: "LinkedIn Link", value: "linkedin_link" },
-  { text: "YouTube Logo", value: "youtube_logo" },
   { text: "YouTube Link", value: "youtube_link" },
   { text: "About Banner Image", value: "about_banner_image" },
   { text: "About Hero Image", value: "about_hero_image" },
@@ -36,6 +30,8 @@ const headers = [
   { text: "Verify Otp Banner Image", value: "verify_otp_banner_image" },
   { text: "Verify Email Banner Image", value: "verify_email_banner_image" },
   { text: "Reset Password Banner Image", value: "reset_password_banner_image" },
+  { text: "Payment Image", value: "payment_image" },
+  { text: "Google Map Link", value: "google_map_link" },
   { text: "Action", value: "action" },
 ];
 
@@ -94,29 +90,9 @@ if (page.props.flash.status === false) {
         <img :src="`/storage/logo/${site_logo}`" style="width: 50px; height: 50px" />
     </template>
 
-    <!-- FB Logo -->
-    <template #item-fb_logo="{ fb_logo }">
-        <img :src="`/storage/logo/${fb_logo}`" style="width: 50px; height: 50px" />
-    </template>
-
-    <!-- Twitter Logo -->
-    <template #item-twitter_logo="{ twitter_logo }">
-        <img :src="`/storage/logo/${twitter_logo}`" style="width: 50px; height: 50px" />
-    </template>
-
-    <!-- Instagram Logo -->
-    <template #item-instagram_logo="{ instagram_logo }">
-        <img :src="`/storage/logo/${instagram_logo}`" style="width: 50px; height: 50px" />
-    </template>
-
-    <!-- LinkedIn Logo -->
-    <template #item-linkedin_logo="{ linkedin_logo }">
-        <img :src="`/storage/logo/${linkedin_logo}`" style="width: 50px; height: 50px" />
-    </template>
-
-    <!-- YouTube Logo -->
-    <template #item-youtube_logo="{ youtube_logo }">
-        <img :src="`/storage/logo/${youtube_logo}`" style="width: 50px; height: 50px" />
+       <!-- Payment Image -->
+    <template #item-payment_image="{ payment_image }">
+        <img :src="`/storage/logo/${payment_image}`" style="width: 50px; height: 50px" />
     </template>
 
     <!-- About Banner Image -->
@@ -164,11 +140,10 @@ if (page.props.flash.status === false) {
         <img :src="`/storage/logo/${contact_banner_image}`" style="width: 50px; height: 50px" />
     </template>
 
-    <!-- Footer Logo -->
+    <!-- Site Favicon -->
     <template #item-site_favicon="{ site_favicon }">
         <img :src="`/storage/logo/${site_favicon}`" style="width: 50px; height: 50px" />
     </template>
-
 
 
     <!-- Action Buttons -->

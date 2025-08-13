@@ -9,6 +9,8 @@ const page = usePage();
 // Table headers
 const headers = [
     { text: "Image", value: "image" },
+    { text: "Title", value: "title" },
+    { text: "Description", value: "description" },
     { text: "Rank", value: "rank" },
     { text: "Action", value: "action" },
 ];

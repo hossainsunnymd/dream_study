@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from "vue";
-import { Link, router, usePage,useForm} from "@inertiajs/vue3";
+import { Link, router, usePage, useForm } from "@inertiajs/vue3";
 import { createToaster } from "@meforma/vue-toaster";
 
 const toaster = createToaster({});
@@ -36,17 +36,17 @@ const form = useForm({
     status: "",
     fromDate: "",
     toDate: "",
+    country_name: "",
 });
 
 function search() {
-   form.get('/admin/bookings', {
-       preserveScroll: true,
-       preserveState: true,
-       onSuccess: () => {
-           items.value = page.props.bookings
-       }
-
-   });
+    form.get("/admin/bookings", {
+        preserveScroll: true,
+        preserveState: true,
+        onSuccess: () => {
+            items.value = page.props.bookings;
+        },
+    });
 }
 
 // Flash message toast
@@ -60,7 +60,7 @@ if (page.props.flash.status === false) {
 <template>
     <h3 class="fw-bold mb-4">Booking List</h3>
 
-        <div class="row mb-3 g-2 align-items-center">
+    <div class="row mb-3 g-2 align-items-center">
         <!-- Search Section -->
         <div class="col-12 col-md-9">
             <div class="d-flex flex-wrap gap-2">
@@ -80,7 +80,22 @@ if (page.props.flash.status === false) {
                     <option value="Pending">Pending</option>
                     <option value="Cancel">Cancel</option>
                     <option value="Approve">Approve</option>
+                </select>
 
+                <select
+                    v-model="form.country_name"
+                    class="form-select"
+                    style="max-width: 200px"
+                >
+                    <option value="" selected disabled>Select Country</option>
+                    <option value="">All</option>
+                    <option
+                        v-for="country in page.props.countries"
+                        :key="country.id"
+                        :value="country.country_name"
+                    >
+                        {{ country.country_name }}
+                    </option>
                 </select>
                 <input
                     v-model="form.fromDate"
@@ -101,13 +116,13 @@ if (page.props.flash.status === false) {
 
         <!-- Create Sale Button -->
         <div class="col-12 col-md-3 text-md-end mt-2 mt-md-0">
-           <Link
-            v-if="page.props.user.can['booking-save']"
-            :href="`/admin/booking-save-page?booking_id=${0}`"
-            class="btn btn-success"
-        >
-            Add Booking
-        </Link>
+            <Link
+                v-if="page.props.user.can['booking-save']"
+                :href="`/admin/booking-save-page?booking_id=${0}`"
+                class="btn btn-success"
+            >
+                Add Booking
+            </Link>
         </div>
     </div>
 
